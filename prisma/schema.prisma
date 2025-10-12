@@ -1,12 +1,89 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int        @id @default(autoincrement())
+  name        String
+  email       String     @unique
+  password    String
+  phone       String?
+  picture     String?
+  role        Role       @default(USER)
+  status      UserStatus @default(ACTIVE)
+  isVerified  Boolean    @default(false)
+  address     String?
+  bio         String?
+  dateOfBirth DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  blogs    Blog[] // relation: one user -> many blogs
+  projects Project[] // relation: one user -> many projects (optional)
+}
+
+model Blog {
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  content   String // consider @db.Text if very large
+  excerpt   String?
+  views     Int      @default(0)
+  tags      String[] // Postgres array
+  category  String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
+
+  comments Comment[] // relation: blog -> many comments
+}
+
+model Project {
+  id           Int      @id @default(autoincrement())
+  title        String
+  slug         String   @unique
+  description  String
+  features     String[] // features list
+  technologies String[] // tech stack
+  isFeatured   Boolean  @default(false)
+  views        Int      @default(0)
+  likes        Int      @default(0)
+  liveUrl      String?
+  repoUrl      String?
+  thumbnail    String?
+  status       String   @default("in-progress")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  authorId Int?
+  author   User? @relation(fields: [authorId], references: [id])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  author    String? // store commenter name or null
+  email     String? // optional email of commenter
+  createdAt DateTime @default(now())
+  blogId    Int
+  blog      Blog     @relation(fields: [blogId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BLOCK
 }
