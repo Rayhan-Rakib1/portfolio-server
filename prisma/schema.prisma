@@ -36,6 +36,7 @@ model Blog {
   views     Int      @default(0)
   tags      String[] // Postgres array
   category  String?
+   isFeatured  Boolean   @default(false)
   published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

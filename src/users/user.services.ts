@@ -2,7 +2,6 @@ import { Prisma, User } from "@prisma/client";
 import { prisma } from "../config/db";
 import AppError from "../error/AppError";
 import { StatusCodes } from "http-status-codes";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const register = async (payload: Prisma.UserCreateInput): Promise<User> => {
@@ -43,10 +42,10 @@ export const loginUser = async (email: string, password: string) => {
     id: user.id,
     name: user.name,
     email: user.email,
+    role: user.role,
     image: user.picture,
   };
 };
-
 
 const logoutUser = async (email: string, password: string) => {
   const user = await prisma.user.findUnique({

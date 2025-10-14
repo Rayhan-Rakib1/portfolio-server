@@ -3,10 +3,17 @@ import { prisma } from "../config/db";
 import AppError from "../error/AppError";
 import { StatusCodes } from "http-status-codes";
 
+
+
 // GET all comments by blogId
 const getCommentsByBlog = async (blogId: number): Promise<Comment[]> => {
   return prisma.comment.findMany({
     where: { blogId },
+    orderBy: { createdAt: "desc" },
+  });
+};
+const getAllComments = async () => {
+  return prisma.comment.findMany({
     orderBy: { createdAt: "desc" },
   });
 };
@@ -54,6 +61,7 @@ const deleteComment = async (id: number): Promise<Comment | null> => {
 };
 
 export const CommentServices = {
+  getAllComments,
   getCommentsByBlog,
   createComment,
   updateComment,

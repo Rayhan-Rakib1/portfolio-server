@@ -5,6 +5,17 @@ import { StatusCodes } from "http-status-codes";
 import AppError from "../error/AppError";
 import { CommentServices } from "./comment.services";
 
+
+ const getAllComments = catchAsync(async (req: Request, res: Response) => {
+  const comments = await CommentServices.getAllComments();
+  
+  sendResponse(res, {
+    success: true,
+    message: "Comments fetched successfully",
+    statusCode: StatusCodes.OK,
+    data: comments,
+  });
+});
 // GET comments by blog
 const getCommentsByBlog = catchAsync(async (req: Request, res: Response) => {
   const { blogId } = req.params;
@@ -72,4 +83,5 @@ export const CommentController = {
   createComment,
   updateComment,
   deleteComment,
+  getAllComments
 };

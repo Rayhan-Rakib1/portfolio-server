@@ -3,6 +3,8 @@ import { CommentController } from "./comment.controller";
 
 const router = Router();
 
+router.get('/', CommentController.getAllComments)
+
 router.get("/blog/:blogId", CommentController.getCommentsByBlog);
 
 router.post("/blog/:blogId", CommentController.createComment);
