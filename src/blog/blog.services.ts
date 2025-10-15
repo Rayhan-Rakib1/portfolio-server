@@ -10,9 +10,9 @@ const getAllBlogs = async (): Promise<Blog[]> => {
   return blogs;
 };
 
-const getBlogBySlug = async (slug: string): Promise<Blog | null> => {
+const getBlogBySlug = async (id: number): Promise<Blog | null> => {
   const blog = await prisma.blog.findUnique({
-    where: { slug },
+    where: { id },
   });
 
   if (!blog) {

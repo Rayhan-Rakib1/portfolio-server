@@ -5,6 +5,7 @@ import { userRoutes } from "./users/user.routes";
 import { blogRoutes } from "./blog/blog.routes";
 import { commentRoutes } from "./comment/comment.routes";
 import { projectRoutes } from "./project/project.routes";
+import { contactMeRoutes } from "./contactMe/contactMe.routes";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/blog", blogRoutes);
 app.use("/api/v1/comment", commentRoutes);
 app.use("/api/v1/projects", projectRoutes);
+app.use("/api/v1/contactMe", contactMeRoutes);
 
 app.get("/", (_req, res) => {
   res.send("api is working");

@@ -43,17 +43,27 @@ const logoutUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 // GET /me - Protected
-const getMe = catchAsync(async (req: Request, res: Response) => {
-  const { email } = req.body;
+const getMe = catchAsync(async (req: any, res: Response) => {
+  const email = req.user?.email;
+  console.log(email);
+
+  if (!email) {
+    res.status(401).json({ message: "Unauthorized" });
+    return; // void return
+  }
+
   const user = await UserServices.getMe(email);
 
-  sendResponse(res, {
+  res.status(200).json({
     success: true,
     message: "User profile fetched successfully",
     statusCode: 200,
     data: user,
   });
+  // ❌ DO NOT return res
 });
+
+
 
 // PATCH /update-user - Protected
 const updateUserProfile = catchAsync(async (req: Request, res: Response) => {

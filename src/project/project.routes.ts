@@ -8,7 +8,7 @@ const router = Router();
 
 // Public: view projects
 router.get("/", ProjectController.getAllProjects);
-router.get("/:slug", ProjectController.getProjectBySlug);
+router.get("/:id", ProjectController.getProjectBySlug);
 
 
 

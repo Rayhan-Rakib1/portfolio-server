@@ -77,6 +77,18 @@ model Comment {
   blogId    Int
   blog      Blog     @relation(fields: [blogId], references: [id])
 }
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  status    String   @default("unread")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
 
 enum Role {
   ADMIN

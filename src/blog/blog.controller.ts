@@ -16,8 +16,8 @@ const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getBlogBySlug = catchAsync(async (req: Request, res: Response) => {
-  const { slug } = req.params;
-  const blog = await BlogServices.getBlogBySlug(slug);
+  const { id } = req.params;
+  const blog = await BlogServices.getBlogBySlug(Number(id));
 
   if (!blog) {
     throw new AppError(StatusCodes.NOT_FOUND, "Blog not found");

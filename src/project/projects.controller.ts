@@ -18,8 +18,8 @@ const getAllProjects = catchAsync(async (req: Request, res: Response) => {
 
 // GET /projects/:slug
 const getProjectBySlug = catchAsync(async (req: Request, res: Response) => {
-  const { slug } = req.params;
-  const project = await ProjectServices.getProjectBySlug(slug);
+  const { id } = req.params;
+  const project = await ProjectServices.getProjectBySlug(Number(id));
 
   if (!project) {
     throw new AppError(StatusCodes.NOT_FOUND, "Project not found");

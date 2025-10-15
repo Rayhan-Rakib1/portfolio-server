@@ -12,9 +12,9 @@ const getAllProjects = async (): Promise<Project[]> => {
 };
 
 // GET project by slug
-const getProjectBySlug = async (slug: string): Promise<Project | null> => {
+const getProjectBySlug = async (id: number): Promise<Project | null> => {
   const project = await prisma.project.findUnique({
-    where: { slug },
+    where: { id:id },
   });
 
   if (!project) {
